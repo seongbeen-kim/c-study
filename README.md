@@ -9,7 +9,7 @@ This repository contains my C programming practice, data structures, and algorit
 - Structures
 - Dynamic Memory
 - Recursion
-- File Organization
+- Multi-file Projects
 - Linked Lists
 - Stack
 - Queue
@@ -31,7 +31,7 @@ This repository contains my C programming practice, data structures, and algorit
 - Greedy Algorithm
 - Divide and Conquer
 - Dynamic Programming (DP)
-- Graph Applications
+- Mini Projects
 
 ## Development Environment
 
