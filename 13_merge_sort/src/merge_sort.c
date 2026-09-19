@@ -12,13 +12,15 @@ void merge(int a[], int left, int mid, int right)
     int j = mid + 1;
     int k = left;
 
-    while (i <= mid && j <= right)
+    while (i <= mid && j <= right) // 두 쪽을 비교
     {
         if (a[i] <= a[j])
             temp[k++] = a[i++];
         else
             temp[k++] = a[j++];
     }
+
+    // 두 쪽 중 한쪽이 남아있을 경우 대입하는 과정
 
     while (i <= mid)
         temp[k++] = a[i++];
@@ -30,9 +32,11 @@ void merge(int a[], int left, int mid, int right)
         a[i] = temp[i];
 }
 
-void mergeSort(int a[], int left, int right)
+void mergeSort(int a[], int left, int right) // 재귀함수
 {
-    if (left < right)
+    // 하나 남을 때까지 분리
+
+    if (left < right) 
     {
         int mid = (left + right) / 2;
 
