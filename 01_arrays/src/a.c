@@ -1,3 +1,229 @@
+/*
+
+재귀는 함수가 자기자신을 부르는 형태이다.
+
+재귀의 대표적인 문제는 최대공약수, 팩토리얼, 거듭제곱, 피보나치 수열,
+하노이 탑이 있다. 
+
+재귀에 대해서 코드를 작성할 수 있어야 하고, 반복(for,while)문으로도
+작성할 수 있어야 한다.!!
+
+재귀코딩 테스트 문제 1번
+
+// 2^n -1
+
+#include <stdio.h>
+int count = 0; // 총 이동횟수를 저장
+int cost = 0; // 총 이동비용을 저장
+// 하노이 타워는 딱히 return하는 값이 없고 그 안에서 이동횟수와 이동비용을 출력하는 형태
+
+
+// 함수에 대해서 이해가 필요하다.
+void hanoi_tower(int n, char from, char tmp, char to)
+{
+    if(n == 1)
+    {
+        printf("Disc %d : %c -->%c \n", n, from, to")
+        count++;
+        cost+=n;
+        return; 
+    }
+
+    hanoi_tower(n-1, from, to, tmp);
+    printf("Disc %d : %c -->%c \n", n, from, to);
+    count++;
+    cost+=n;
+    hanoi_tower(n-1, tmp, from, to);
+
+}
+
+int main()
+{
+    int n;
+    printf("Input Disc: ");
+    scanf("%d", &n); //원판의 개수를 입력받음
+
+    hanoi_tower(n, 'A', 'B', 'C'); 
+    // 원판의 개수와 기둥 이름을 전달
+    // A: 시작 기둥(출발점), B: 보조 기둥(임시), C: 목표 기둥(도착점)
+
+    // 총 이동횟수와 총 이동비용을 출력해야 한다. (전역변수 설정) )
+
+    printf("Total Move: %d \n", count);
+    printf("Total Cost: %d \n", cost);
+
+    return 0;
+
+}
+
+재귀코딩 테스트 문제 2번
+
+// 3^n -1
+
+로봇팔의 원판 이동(하노이 탑 문제에서 확장된 문제)
+로봇팔의 구조상 부품은 인접한 기둥사이에서만 이동할 수 있다
+
+//  
+
+#include <stdio.h>
+int count = 0; // 총 이동횟수를 저장
+int cost = 0; // 총 이동비용을 저장
+// 하노이 타워는 딱히 return하는 값이 없고 그 안에서 이동횟수와 이동비용을 출력하는 형태
+
+
+// 함수에 대해서 이해가 필요하다.
+void hanoi_tower(int n, char from, char tmp, char to)
+{
+    if(n == 1)
+    {
+        printf("Disc %d : %c -->%c \n", n, from, tmp")
+        printf("Disc %d : %c -->%c \n", n, tmp, to")
+        count+=2;
+        cost+=2*n;
+        return; 
+    }
+
+    hanoi_tower(n-1, from, tmp, to); 
+    printf("Disc %d : %c -->%c \n", n, from, tmp);
+    hanoi_tower(n-1, to, tmp, from);
+    printf("Disc %d : %c -->%c \n", n, tmp, to);
+    count+=2;
+    cost+=2*n;
+    hanoi_tower(n-1, from, tmp, to);
+}
+
+int main()
+{
+    int n;
+    printf("Input Disc: ");
+    scanf("%d", &n); //원판의 개수를 입력받음
+
+    hanoi_tower(n, 'A', 'B', 'C'); 
+    // 원판의 개수와 기둥 이름을 전달
+    // A: 시작 기둥(출발점), B: 보조 기둥(임시), C: 목표 기둥(도착점)
+
+    // 총 이동횟수와 총 이동비용을 출력해야 한다. (전역변수 설정) )
+
+    printf("Total Move: %d \n", count);
+    printf("Total Cost: %d \n", cost);
+
+    return 0;
+
+}
+
+재귀코딩 테스트 문제 3번
+
+2xN 타일 채우기(피보나치 아이디어!!)
+
+int tile(int n)
+{
+    if(n==1) return 1;
+    if(n==2) return 2;
+
+    return tile(n-1)+tile(n-2);
+}
+
+int main()
+{
+    int n, count = 0;
+    printf("Input N: ");
+    scanf("%d", &n);
+
+    count = tile(n);
+    printf("Total: %d\n", count);
+
+    return 0;
+}
+
+// 만약 N=30인데 1초안에 구현하라고 하면 반복문을 사용해서 풀어야 함
+// 시간 복잡도 2^30이기 때문에 1초안에 못 들어갈 확률이 높다. 
+// 반복문으로 구현하는 코드이다. 시간 복잡도 o(n)
+// 강의 노트는 배열을 써서 구현했다.(재귀) 시간 복잡도 o(2^n)
+
+int main()
+{
+    int n;
+    printf("Input N: ");
+    scanf("%d", &n);
+
+    int a = 1;
+    int b = 2;
+    int c;
+    for(int i=3; i<=n; i++)
+    {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+
+    printf("Total: %d\n", c);
+
+    return 0;
+}
+
+
+재귀코딩 테스트 문제 4번
+
+합이 S가 되는 부분 수열의 개수 구하기
+자주 나오는 코딩 테스트 문제, 응용 및 확장이 많이 된다
+시간 복잡도 o(2^n)
+
+#include<stdio.h>
+#define MAX 10
+
+int a[max];
+int count = 0;
+int n, s;
+
+void subset(int index, int sum)
+{
+    if(index == n)
+    {
+        if(sum==s)
+        {
+        count++; 
+        }
+        return;
+    }
+
+    subset(index+1, sum); //왼쪽 케이스
+    subset(index+1, sum+a[index]);
+
+
+}
+
+int main(void)
+{
+    printf("Input N, S: ");
+    scanf("%d %d", &n, &s);
+
+    for(int i=0; i<n; i++)
+    {
+        scanf("%d", &a[i]);
+    }
+    
+    subset(0, 0); // index , subset
+    printf("Total: %d\n", count); 
+
+    return 0;
+}
+
+재귀코딩 테스트 문제 5번
+
+미로에서 출구를 찾아라(중요한 문제)
+중간고사 이후에 자료구조에서 그래프, 트리를 배우게 되는데
+여기서 가장 중요한 알고리즘이 2개 있는데, 탐색알고리즘인데 dfs, bfs이다
+dfs = depth first search(깊이 우선 탐색)
+bfs = breadth first search(너비 우선 탐색)
+그래프를 우리가 탐색할 때는 제일 먼저 만나는 탐색 알고리즘이 dfs, bfs이다
+
+depth - 재귀로 구현함
+breadth - while문으로 구현함
+문제 출제 빈도는 bfs>>dfs
+dfs에서 가장 기본적인 출발점을 다루는 문제임(미로에서 출구를 찾는 문제) 
+
+*/
+
 
 //재귀 코드(하노이)
 /*
@@ -289,5 +515,3 @@ int main()
     return 0;
 
 }
-
-
